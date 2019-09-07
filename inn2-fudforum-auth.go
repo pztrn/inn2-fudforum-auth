@@ -133,10 +133,14 @@ func main() {
 		log.Printf("Password stored in database: %s, we hashed: %s (pre: %s)\n", dbData.Password, saltedPassHash, passHash)
 	}
 
+	if dbData.Password != saltedPassHash {
+		os.Exit(1)
+	}
+
 	// Check groups mapping.
 	// This is temporary, in future versions all groups memberships
 	// should be managed on FUDForum side.
-	var group string
+	group := configuration.Cfg.Groups.Default
 	for _, groupMapping := range configuration.Cfg.Groups.Groups {
 		var userFound bool
 		for _, user := range groupMapping.Users {
