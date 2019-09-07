@@ -20,6 +20,12 @@ groups:
   default: "regular"
   # Groups to users mapping.
   # This is a list of structures. Example "admin" group included.
+  # Group name from "group" parameter will be added to user as INN2 wants
+  # only on successful authentications. In this example this string will
+  # be returned to INN2:
+  #
+  #     User:localadmin@admin
+  #
   groups:
   - group: "admin"
     # This is a list of users.

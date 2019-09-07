@@ -12,8 +12,34 @@ Right now authentication provider is able to connect only to PostgreSQL database
 
 ## Installation
 
-*TBW*
+Right now you can build it yourself by using ``go get``:
+
+```bash
+go get -u -v develop.pztrn.name/pztrn/inn2-fudforum-auth
+```
+
+Binary will be placed in ``$GOPATH/bin``. Use [this configuration example](/inn2-fudforum-auth.dist.yaml) as example and tune it.
 
 ## Configuration
 
-*TBW*
+### Provider
+
+See [this configuration example](/inn2-fudforum-auth.dist.yaml), it has comments for each section.
+
+Don't forget to define default group and other groups your INN2 is using in ``readers.conf``!
+
+### INN2
+
+INN2 authentication uses ``auth`` and ``access`` blocks, first for authentication and second for authorization. We should define them both for each users group. Example for ``admin`` group from configuration example:
+
+```text
+auth admin {
+    hosts: *
+    auth: /usr/local/bin/inn2-fudforum-auth -config /etc/news/inn2-fudforum-auth.yaml
+}
+
+access admin {
+    users: "*@admin"
+    newsgroups: *
+}
+```
