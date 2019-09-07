@@ -1,0 +1,27 @@
+# Debug logging. Should be disabled when INN2 uses us, because INN2
+# will stop authenticate.
+debug: false
+
+# Database configuration
+database:
+  # DSN in form of "proto://user:pass@address:port/database". "port"
+  # part can be ommitted.
+  dsn: ""
+  # Parameters for database connection. Should be safe to not change them.
+  parameters: "connect_timeout=10&sslmode=disable"
+  # FUDForum's database prefix.
+  prefix: ""
+
+# Groups to users mapping.
+# This is a workaround, in future versions all group membership management
+# will be done on FUDForum side.
+groups:
+  # Default group for users.
+  default: "regular"
+  # Groups to users mapping.
+  # This is a list of structures. Example "admin" group included.
+  groups:
+  - group: "admin"
+    # This is a list of users.
+    users:
+      - "localadmin"
