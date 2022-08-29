@@ -1,14 +1,11 @@
 package database
 
 import (
-	// stdlib
 	"log"
 
-	// local
-	"develop.pztrn.name/pztrn/inn2-fudforum-auth/configuration"
-
-	// other
 	"github.com/jmoiron/sqlx"
+	"go.dev.pztrn.name/inn2-fudforum-auth/configuration"
+
 	// postgres driver
 	_ "github.com/lib/pq"
 )
@@ -25,6 +22,7 @@ func Initialize() {
 	if configuration.Cfg.Database.Parameters != "" {
 		dsn = configuration.Cfg.Database.DSN + "?" + configuration.Cfg.Database.Parameters
 	}
+
 	conn, err := sqlx.Open("postgres", dsn)
 	if err != nil {
 		log.Fatalln("Can't connect to fudforum database: " + err.Error())
@@ -39,12 +37,13 @@ func Initialize() {
 
 // Shutdown closes database connection.
 func Shutdown() {
+	//nolint:nestif
 	if Conn != nil {
 		if configuration.Cfg.Debug {
 			log.Println("Closing database connection...")
 		}
-		err := Conn.Close()
-		if err != nil {
+
+		if err := Conn.Close(); err != nil {
 			log.Fatalln("Failed to close database connection: " + err.Error())
 		} else {
 			if configuration.Cfg.Debug {

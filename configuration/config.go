@@ -1,14 +1,11 @@
 package configuration
 
 import (
-	// stdlib
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
 
-	// other
 	"gopkg.in/yaml.v2"
 )
 
@@ -29,7 +26,7 @@ type config struct {
 	} `yaml:"groups"`
 }
 
-// Checks neccessary parameters for filling.
+// Checks necessary parameters for filling.
 func (c *config) checkParameters() {
 	if c.Database.DSN == "" {
 		log.Fatalln("database/dsn parameter isn't filled, don't know to which database I should connect!")
@@ -60,7 +57,7 @@ func (c *config) Initialize() {
 	}
 
 	// Read and parse.
-	dataAsBytes, err1 := ioutil.ReadFile(absolutePath)
+	dataAsBytes, err1 := os.ReadFile(absolutePath)
 	if err1 != nil {
 		log.Fatalln("Failed to read configuration file! Error was: " + err1.Error())
 	}

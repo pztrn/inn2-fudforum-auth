@@ -1,0 +1,47 @@
+---
+run:
+  deadline: 5m
+linters:
+  enable-all: true
+  disable:
+    # Because globals might exist, but according to our codestyle they
+    # should be lowercased and considered as unexported.
+    - gochecknoglobals
+    # While it might be useful it'll create more problems that will solve.
+    - gocritic
+    # Complains about main() lengths, which isn't an issue.
+    - funlen
+    # Magic numbers. They're everywhere. Do not warn us about them.
+    - gomnd
+    # Well, this linter is whining about some shit.
+    - testpackage
+    # Crashes a lot.
+    - gci
+    # This linter is opinionated IMO.
+    # nolint
+    - ireturn
+    # I don't think there will be any of parallel running tests.
+    - paralleltest
+    # Commented code might not have periods in the end.
+    - godot
+    # Some things will contain context!
+    - containedctx
+    # Deprecated linters.
+    - exhaustivestruct
+linters-settings:
+  lll:
+    line-length: 128
+  gocyclo:
+    min-complexity: 40
+  cyclop:
+    max-complexity: 25
+
+issues:
+  exclude-rules:
+    # There will be some ToDos.
+    - linters:
+        - godox
+      text: "TODO"
+    - linters:
+        - gosec
+      text: "G101"
